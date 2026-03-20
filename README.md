@@ -53,10 +53,18 @@ python spotifyplaylist.py
 ## Features
 
 - **One-click login** — Built-in OAuth flow opens your browser automatically.
+- **Remember credentials** — Save your Client ID/Secret so you don't re-enter them.
 - **Search by song name** — No need to know Spotify URIs.
 - **Checkbox selection** — Pick songs from search results visually.
+- **30-second previews** — Listen to a clip before adding a song.
+- **Use existing playlists** — Pick from your playlists or create a new one.
+- **See what's in your playlist** — Live track list updates as you add songs.
+- **Duplicate detection** — Warns you before adding songs already in the playlist.
+- **Reorder tracks** — Move songs up/down in your playlist.
+- **Batch add** — Paste a list of song names and add them all at once.
 - **Auto-detects your account** — No need to look up your User ID.
 - **Public or private playlists** — Your choice.
+- **Clear error messages** — Human-readable errors instead of cryptic codes.
 
 ## Using as a Library
 
