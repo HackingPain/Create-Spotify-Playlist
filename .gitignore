@@ -1,0 +1,15 @@
+# Claude Code worktrees
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Environment
+.env

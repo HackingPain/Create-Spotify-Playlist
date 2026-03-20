@@ -1,91 +1,95 @@
 # Spotify Playlist Manager
 
-The Spotify Playlist Manager is a Python script and GUI application that interacts with the Spotify Web API to create playlists and add tracks to them.
+A simple desktop app to create Spotify playlists and add songs by searching — no technical knowledge required.
+
+## How It Works
+
+1. **Log in** — Click "Log In with Spotify", your browser opens, you approve, done.
+2. **Create a playlist** — Type a name, click "Create Playlist".
+3. **Search for songs** — Type a song or artist name, check the ones you want, click "Add Selected".
+
+That's it!
+
+## Setup (One-Time)
+
+### 1. Get Spotify API Credentials
+
+1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and log in.
+2. Click **Create App**.
+3. Set the **Redirect URI** to `http://localhost:8888/callback` and save.
+4. Copy your **Client ID** and **Client Secret**.
+
+### 2. Install Python
+
+Make sure you have [Python 3.6+](https://www.python.org/downloads/) installed.
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. (Optional) Set Environment Variables
+
+You can pre-fill the login fields by setting these:
+
+```bash
+export SPOTIFY_CLIENT_ID='your_client_id'
+export SPOTIFY_CLIENT_SECRET='your_client_secret'
+```
+
+On Windows:
+```cmd
+set SPOTIFY_CLIENT_ID=your_client_id
+set SPOTIFY_CLIENT_SECRET=your_client_secret
+```
+
+## Running the App
+
+```bash
+python spotifyplaylist.py
+```
 
 ## Features
 
-- **Create Playlist:** Create a new private Spotify playlist.
-- **Add Tracks:** Add specified tracks to an existing Spotify playlist.
+- **One-click login** — Built-in OAuth flow opens your browser automatically.
+- **Remember credentials** — Save your Client ID/Secret so you don't re-enter them.
+- **Search by song name** — No need to know Spotify URIs.
+- **Checkbox selection** — Pick songs from search results visually.
+- **30-second previews** — Listen to a clip before adding a song.
+- **Use existing playlists** — Pick from your playlists or create a new one.
+- **See what's in your playlist** — Live track list updates as you add songs.
+- **Duplicate detection** — Warns you before adding songs already in the playlist.
+- **Reorder tracks** — Move songs up/down in your playlist.
+- **Batch add** — Paste a list of song names and add them all at once.
+- **Auto-detects your account** — No need to look up your User ID.
+- **Public or private playlists** — Your choice.
+- **Clear error messages** — Human-readable errors instead of cryptic codes.
 
-## Prerequisites
+## Using as a Library
 
-Before using this application, ensure you have the following:
+You can also use the functions directly in your own scripts:
 
-- **Python:** Version 3.6 or higher installed.
-- **Dependencies:** Install necessary Python packages using `pip`:
+```python
+from spotifyplaylist import create_playlist, add_tracks_to_playlist, search_tracks
 
-  pip install requests  
+# Create a playlist
+playlist_id = create_playlist(access_token, user_id, "My Playlist")
 
-## Setup
+# Search for tracks
+results = search_tracks(access_token, "bohemian rhapsody")
 
-1. **Obtain Spotify API Credentials:**
-   - Create a Spotify Developer account and register your application to obtain:
-     - Client ID
-     - Client Secret
-     - Redirect URI (for future enhancements)
-
-2. **Configure Environment Variables:**
-   - Store your Spotify Client ID and Client Secret securely as environment variables:
-   
-     export SPOTIFY_CLIENT_ID='your_client_id'
-     export SPOTIFY_CLIENT_SECRET='your_client_secret'
-
-3. **Run the Application:**
-   - Execute the Python script `spotify_playlist_manager.py`:
-   
-     python spotify_playlist_manager.py     
-
-## Usage
-
-### GUI Application
-
-- Launch the GUI by running `spotify_playlist_manager.py`.
-- Fill in the required fields (`Access Token`, `User ID`, `Playlist Name`, `Track URIs`).
-- Click `Create Playlist` to create a new playlist.
-- Click `Add Tracks` to add tracks to an existing playlist.
-
-### Command Line Interface (CLI)
-
-- For batch operations or scripting, use the functions `create_playlist` and `add_tracks_to_playlist` directly in your Python scripts.
-
-## Examples
-
-### Creating a Playlist
-
-access_token = "your_access_token_here"
-user_id = "your_spotify_user_id_here"
-playlist_name = "2000-2004 Hits"
-playlist_id = create_playlist(access_token, user_id, playlist_name)
-print(f"Created playlist '{playlist_name}' with ID: {playlist_id}")
-
-### Adding Tracks to a Playlist
-
-access_token = "your_access_token_here"
-playlist_id = "playlist_id_here"
-track_uris = [
-    "spotify:track:4uLU6hMCjMI75M1A2tKUQC",
-    "spotify:track:another_track_uri_here"
-]
-success = add_tracks_to_playlist(access_token, playlist_id, track_uris)
-if success:
-    print(f"Added {len(track_uris)} tracks to playlist ID: {playlist_id}")
-else:
-    print("Failed to add tracks.")
-
-## Logging
-
-- Detailed logs are captured in the console (`stdout`) using Python's `logging` module. Adjust logging levels (`INFO`, `ERROR`) as needed for debugging.
+# Add tracks
+uris = [r["uri"] for r in results[:3]]
+add_tracks_to_playlist(access_token, playlist_id, uris)
+```
 
 ## Troubleshooting
 
-- Ensure all required fields (`Access Token`, `User ID`, `Playlist Name`, `Track URIs`) are correctly filled before performing operations.
-- Check the console for detailed error messages in case of failures.
+- **"Login failed"** — Make sure your Client ID/Secret are correct and your Redirect URI is set to `http://localhost:8888/callback` in the Spotify Developer Dashboard.
+- **Browser doesn't open** — Copy the URL from the console and open it manually.
+- **Port 8888 in use** — Close other apps using that port, or wait a moment and try again.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Spotify Web API documentation for providing guidelines on API usage.
-
+MIT License — see [LICENSE](LICENSE) for details.
